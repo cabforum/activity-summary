@@ -1,0 +1,7 @@
+[{{repository.name}}] {{{issue.title}}} (#{{{issue.number}}})
+{{{issue.user.login}}} has just created a new issue for {{{repository.html_url}}}:
+
+== {{{issue.title}}} ==
+{{{issue.body}}}
+
+Please view or discuss this issue at {{{issue.html_url}}} using your GitHub account
