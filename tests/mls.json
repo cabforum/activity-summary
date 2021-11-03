@@ -1,0 +1,72 @@
+{
+    "dom@localhost": {
+        "http://www.w3.org/TR/odor": {
+            "events": ["tr.published"]
+        },
+        "dontcallmedom/github-notify-ml": {
+            "events": ["issues.opened", "issues.closed", "issue_comment.created", "pull_request.opened", "foobar"],
+            "branches": {
+                "master": ["push"]
+            }
+        },
+        "w3c/web-platform-tests": {
+            "events": ["pull_request.opened", "pull_request.labeled"],
+            "eventFilter": {"label":["wg-das","wg-webrtc"]}
+        },
+        "w3c/presentation-api": {
+            "events": ["pull_request.opened"]
+        },
+        "w3c/mediacapture-main": {
+            "events": ["issue_comment.created"]
+        },
+        "regexp:Codertocat/.*": {
+            "events": ["repository.created", "repository.deleted"]
+        },
+        "regexp:w3c/.*": {
+            "events": ["repository.transferred"]
+        },
+        "w3c/webrtc-pc": {
+            "events": ["pull_request.closed"]
+        },
+        "digest:wednesday": [
+            {
+                "repoList": "https://w3c.github.io/validate-repos/rec-track-repos.json",
+                "repos": ["w3c/webrtc-pc"],
+                "eventFilter": {"label": ["editorial"]},
+                "topic": "Editorial issues across all repos"
+            },
+            {
+                "repos": ["w3c/webrtc-pc", "foo/bar"]
+            },
+            {
+                "repos": ["w3c/webrtc-pc"],
+                "eventFilter": {"label": ["PR exists"], "notlabel": ["List discussion needed"]},
+                "topic": "Issues with proposed edits"
+            },
+            {
+                "topic": "Issues with per-repo label rules",
+                "sources": [
+                  {
+                    "repos": ["w3c/webcrypto"],
+                    "eventFilter": {"label": ["editorial"]}
+                  },
+                  {
+                    "repos": ["w3c/webrtc-pc"],
+                    "eventFilter": {"notlabel": ["List discussion needed"]}
+                  }
+                ]
+            }
+        ],
+        "summary:quarterly": [
+            {
+                "repos": ["w3c/webcrypto"]
+            }
+        ]
+    },
+    "log@localhost": {
+        "regexp:.*": {
+            "events": ["pull_request.opened", "issues.opened"],
+            "eventFilter": {"label":"enhancement"}
+        }
+    }
+}
