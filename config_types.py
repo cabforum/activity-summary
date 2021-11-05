@@ -17,13 +17,13 @@ class GithubRepository(NamedTuple):
             resp = requests.head(uri, timeout=5)
         except requests.RequestException:
             logging.exception(f'Exception occurred when validating GitHub repository "{self}"')
-
             return False
 
         if resp.status_code == http.HTTPStatus.OK:
             return True
         else:
             logging.error(f'HTTP status code {resp.status_code} encountered when validating GitHub repository "{self}"')
+            return False
 
     def __str__(self):
         return f'{self.username}/{self.name}'
