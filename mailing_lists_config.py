@@ -1,6 +1,6 @@
 import os
 
-import config_types
+from config_types import GithubRepository, MailingList
 
 
 FROM_ADDRESS = 'infra-bot@cabforum.org'
@@ -12,19 +12,27 @@ EXECUTION_DAY_LOWERCASE = 'sunday'
 _USER_OFFICIAL = 'cabforum'
 
 # MAILING LISTS section
-_MAILING_LIST_CODE_SIGNING = config_types.MailingList(
+_MAILING_LIST_CODE_SIGNING = MailingList(
     'Code Signing Certificate Working Group',
     'cscwg-public@cabforum.org',
     [
-        config_types.GithubRepository(_USER_OFFICIAL, 'code-signing'),
+        GithubRepository(_USER_OFFICIAL, 'code-signing'),
     ]
 )
 
-_MAILING_LIST_SMIME = config_types.MailingList(
+_MAILING_LIST_SMIME = MailingList(
     'S/MIME Certificate Working Group',
     'smcwg-public@cabforum.org',
     [
-        config_types.GithubRepository(_USER_OFFICIAL, 'smime'),
+        GithubRepository(_USER_OFFICIAL, 'smime'),
+    ]
+)
+
+_MAILING_LIST_SERVERCERT = MailingList(
+    'Server Certificate Working Group',
+    'servercert-wg@cabforum.org',
+    [
+        GithubRepository(_USER_OFFICIAL, 'servercert'),
     ]
 )
 
@@ -32,6 +40,7 @@ _MAILING_LIST_SMIME = config_types.MailingList(
 MAILING_LISTS_CONFIGURATION = [
     _MAILING_LIST_CODE_SIGNING,
     _MAILING_LIST_SMIME,
+    _MAILING_LIST_SERVERCERT,
 ]
 
 ACTIVITY_BOT_CONFIGURATION = {
