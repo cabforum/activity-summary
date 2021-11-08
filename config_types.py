@@ -1,9 +1,9 @@
 from typing import NamedTuple, List
-import requests
 import http
 import logging
 
 import validators
+import requests
 
 
 class GithubRepository(NamedTuple):
@@ -47,3 +47,27 @@ class MailingList(NamedTuple):
 
     def __str__(self):
         return self.name
+
+
+def _all_keys_unique(mailing_lists: List[MailingList], key):
+    keys = [getattr(m, key) for m in mailing_lists]
+
+    duplicates = {k for k in keys if keys.count(k) > 1}
+
+    if len(duplicates) > 0:
+        duplicates_str = ', '.join(duplicates)
+
+        logging.error(f'Duplicate mailing list {key} values: {duplicates_str}')
+
+        return False
+    else:
+        return True
+
+
+def validate_configuration(configuration: List[MailingList]) -> bool:
+    return (
+        _all_keys_unique(configuration, 'name') and
+        _all_keys_unique(configuration, 'address') and
+        all((m.validate() for m in configuration)) and
+        all(all((r.validate() for r in m.repositories)) for m in configuration)
+    )

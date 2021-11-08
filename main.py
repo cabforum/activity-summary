@@ -41,7 +41,6 @@ def _get_destination_address(mailing_list: config_types.MailingList, test_addres
         return f'{local_part}+{list_name_alphanum}@{domain_part}'
 
 
-
 def _config_to_json(configuration: List[config_types.MailingList], test_address: str=None) -> str:
     return json.dumps(
         {
@@ -49,17 +48,6 @@ def _config_to_json(configuration: List[config_types.MailingList], test_address:
             for m in configuration
         }
     )
-
-
-def _validate(configuration: List[config_types.MailingList]) -> bool:
-    for mailing_list in configuration:
-        if not mailing_list.validate():
-            return False
-        for repo in mailing_list.repositories:
-            if not repo.validate():
-                return False
-
-    return True
 
 
 def _send(configuration: List[config_types.MailingList], test_address: str=None) -> None:
@@ -96,11 +84,9 @@ else:
     test_address = None
 
 if args.action == 'validate':
-    result = _validate(mailing_lists_config.MAILING_LISTS_CONFIGURATION)
-    if result:
-        exit(0)
-    else:
-        exit(1)
+    exit(
+        0 if config_types.validate_configuration(mailing_lists_config.MAILING_LISTS_CONFIGURATION) else 1
+    )
 elif args.action == 'send':
     _send(mailing_lists_config.MAILING_LISTS_CONFIGURATION, test_address)
 else:
