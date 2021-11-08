@@ -6,6 +6,9 @@ import sys
 import os
 import pathlib
 import logging
+import re
+
+import validators
 
 import config_types
 import mailing_lists_config
@@ -27,10 +30,22 @@ def _mailing_list_to_dict(mailing_list: config_types.MailingList) -> Mapping[str
     }
 
 
-def _config_to_json(configuration: List[config_types.MailingList]) -> str:
+def _get_destination_address(mailing_list: config_types.MailingList, test_address: str=None) -> str:
+    if test_address is None:
+        return mailing_list.address
+    else:
+        local_part, domain_part = test_address.split('@', maxsplit=1)
+
+        list_name_alphanum = re.sub(r'\W', '', mailing_list.name)
+
+        return f'{local_part}+{list_name_alphanum}@{domain_part}'
+
+
+
+def _config_to_json(configuration: List[config_types.MailingList], test_address: str=None) -> str:
     return json.dumps(
         {
-            m.address: _mailing_list_to_dict(m)
+            _get_destination_address(m, test_address): _mailing_list_to_dict(m)
             for m in configuration
         }
     )
@@ -47,11 +62,11 @@ def _validate(configuration: List[config_types.MailingList]) -> bool:
     return True
 
 
-def _send(configuration: List[config_types.MailingList]) -> None:
+def _send(configuration: List[config_types.MailingList], test_address: str=None) -> None:
     pathlib.Path(MLS_JSON_DIR).mkdir(parents=True, exist_ok=True)
 
     with open(os.path.join(MLS_JSON_DIR, mailing_lists_config.MLS_JSON_FILENAME), 'w') as f:
-        f.write(_config_to_json(configuration))
+        f.write(_config_to_json(configuration, test_address))
 
     with open(os.path.join(MLS_JSON_DIR, ACTIVITY_BOT_CONFIG_FILENAME), 'w') as f:
         f.write(json.dumps(mailing_lists_config.ACTIVITY_BOT_CONFIGURATION))
@@ -72,6 +87,14 @@ parser.add_argument('action', choices=['send', 'validate'])
 
 args = parser.parse_args()
 
+test_address = os.environ.get('TEST_ADDRESS')
+
+if test_address:
+    if not validators.email(test_address):
+        raise ValueError(f'E-mail address "{test_address}" is not valid')
+else:
+    test_address = None
+
 if args.action == 'validate':
     result = _validate(mailing_lists_config.MAILING_LISTS_CONFIGURATION)
     if result:
@@ -79,6 +102,6 @@ if args.action == 'validate':
     else:
         exit(1)
 elif args.action == 'send':
-    _send(mailing_lists_config.MAILING_LISTS_CONFIGURATION)
+    _send(mailing_lists_config.MAILING_LISTS_CONFIGURATION, test_address)
 else:
     raise ValueError(f'Unknown action "{args.action}"')
