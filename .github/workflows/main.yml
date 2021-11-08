@@ -34,6 +34,6 @@ jobs:
         SMTP_USERNAME: cbonnell.digicert
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
         SMTP_SSL: TRUE
-        TEST_ADDRESS: ${{ github.event.input.test_address }}
+        TEST_ADDRESS: ${{ github.event.inputs.test_address }}
       run: |
         python main.py send
