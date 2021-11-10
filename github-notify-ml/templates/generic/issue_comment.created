@@ -1,0 +1,6 @@
+Re: [{{{repository.name}}}] {{{issue.title}}} (#{{{issue.number}}})
+{{{comment.body}}}
+
+-- 
+GitHub Notification of comment by {{{comment.user.login}}}
+Please view or discuss this issue at {{{comment.html_url}}} using your GitHub account

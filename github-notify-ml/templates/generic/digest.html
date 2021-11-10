@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{period}} github digest ({{#topic}}{{.}}{{/topic}}{{^topic}}{{#repos}}{{shortname}}{{^last}}, {{/last}}{{/repos}}{{/topic}})</title>
+<style>
+body { font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 14px; }
+h2 { margin-top: 3em; color: #A52A2A; font-style: italic; font-weight: normal; }
+h3 { margin-bottom:0; margin-top: 2em; font-size: 1.2em; }
+h1+h2 { margin-top: 1em; }
+a { color: #bb6219; text-decoration: none; }
+li { margin-bottom: .35em; }
+.repos { margin-bottom: 0; margin-top:0; line-height: 1.2; }
+.new { color: red; }
+.label { display: inline;
+	padding: .2em .6em .3em;
+	font-size: 75%;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: .25em;
+}
+details {
+	margin-top: 8em;
+	}
+summary {
+	margin-bottom: 1em;
+	cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+<h1>{{date}}</h1>
+{{#errors.count}}Errors while compiling the digest:
+<ul>
+{{#errors.list}}<li>{{error}}</li>{{/errors.list}}
+</ul>
+{{/errors.count}}
+
+{{#filtered}}<p>Events {{#filteredlabels}}with label {{#labels}}<span class="label" style="background-color: #005a9c">{{name}}</span>{{^last}}, {{/last}}{{/labels}}{{#filteredantilabels}} and {{/filteredantilabels}}{{/filteredlabels}}{{#filteredantilabels}}without label {{#antilabels}}"{{name}}"{{^last}}, {{/last}}{{/antilabels}}{{/filteredantilabels}}</p>
+{{/filtered}}
+
+{{#summary}}<h2>Repositories</h2>
+{{#repostatus}}<h3>{{name}}</h3>
+<ul>
+ <li>open issues and pull requests: {{repo.open_issues_count}}</li>
+ <li>activity on issues: +{{newissues.count}}/-{{closedissues.count}}/💬{{issuecommentscount}}</li>
+ <li>activity on pull requests: +{{newpr.count}}/-{{mergedpr.count}}/💬{{prcommentscount}}</li>
+</ul>
+{{/repostatus}}{{/summary}}{{#activeissues}}<h2>Issues</h2>
+
+{{#activeissuerepos}}
+<h3>{{name}} (+{{newissues.count}}/-{{closedissues.count}}/💬{{issuecommentscount}})</h3>
+{{#newissues.count}}  <p class="new">{{.}} issues created:</p>
+  <ul>{{#newissues.list}}
+  <li>#{{payload.issue.number}} <a href="{{payload.issue.html_url}}">{{payload.issue.title}}</a> (by {{actor.display_login}}) {{#payload.issue.labels}}<span class="label" style="background-color: #{{color}}; color: #{{text_color}}">{{name}}</span> {{/payload.issue.labels}}</li>
+  {{/newissues.list}}</ul>
+{{/newissues.count}}
+
+{{#commentedissues.count}}  <p>{{.}} issues received {{issuecommentscount}} new comments:</p>
+  <ul>{{#commentedissues.list}}
+  <li>#{{number}} <a href="{{url}}">{{title}}</a> ({{commentscount}} by {{#commentors}}{{name}}{{^last}}, {{/last}}{{/commentors}}) {{#labels}}<span class="label" style="background-color: #{{color}}; color: #{{text_color}}">{{name}}</span> {{/labels}}</li>
+  {{/commentedissues.list}}</ul>
+{{/commentedissues.count}}
+
+{{#closedissues.count}}  <p>{{.}} issues closed:</p>
+  <ul>{{#closedissues.list}}
+  <li>#{{payload.issue.number}} <a href="{{payload.issue.html_url}}">{{payload.issue.title}}</a> {{#payload.issue.labels}}<span class="label" style="background-color: #{{color}}; color: #{{text_color}}">{{name}}</span> {{/payload.issue.labels}}</li>
+  {{/closedissues.list}}</ul>
+{{/closedissues.count}}
+
+{{/activeissuerepos}}{{/activeissues}}
+
+{{#activeprs}}<h2>Pull requests</h2>
+{{#activeprrepos}}
+<h3>{{name}} (+{{newpr.count}}/-{{mergedpr.count}}/💬{{prcommentscount}})</h3>
+{{#newpr.count}}  <p class="new">{{.}} pull requests submitted:</p>
+  <ul>{{#newpr.list}}
+  <li>#{{payload.pull_request.number}} <a href="{{payload.pull_request.html_url}}">{{payload.pull_request.title}}</a> (by {{actor.display_login}}) {{#payload.pull_request.labels}}<span class="label" style="background-color: #{{color}}; color: #{{text_color}}">{{name}}</span> {{/payload.pull_request.labels}}</li>
+  {{/newpr.list}}</ul>
+{{/newpr.count}}
+
+{{#commentedpr.count}}  <p>{{.}} pull requests received {{prcommentscount}} new comments:</p>
+  <ul>{{#commentedpr.list}}
+  <li>#{{number}} <a href="{{url}}">{{title}}</a> ({{commentscount}} by {{#commentors}}{{name}}{{^last}}, {{/last}}{{/commentors}}) {{#labels}}<span class="label" style="background-color: #{{color}}; color: #{{text_color}}">{{name}}</span> {{/labels}}</li>
+  {{/commentedpr.list}}</ul>
+{{/commentedpr.count}}
+
+{{#mergedpr.count}}  <p>{{.}} pull requests merged:</p>
+  <ul>{{#mergedpr.list}}
+  <li>#{{payload.pull_request.number}} <a href="{{payload.pull_request.html_url}}">{{payload.pull_request.title}}</a> {{#payload.pull_request.labels}}<span class="label" style="background-color: #{{color}}; color: #{{text_color}}">{{name}}</span> {{/payload.pull_request.labels}}</li>
+  {{/mergedpr.list}}</ul>
+{{/mergedpr.count}}
+
+{{/activeprrepos}}
+{{/activeprs}}
+
+  <details>
+    <summary>Repositories tracked by this digest:</summary>
+<ul class="repos">
+{{#repos}}
+  <li><a href="{{url}}">{{url}}</a></li>
+{{/repos}}
+</ul>
+</details>
+{{#signature}}
+<address>{{.}}</address>
+{{/signature}}
+</body>
+</html>
