@@ -30,8 +30,8 @@ jobs:
     - name: run script
       env:
         GH_OAUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SMTP_HOST: smtp.gmail.com
-        SMTP_USERNAME: cbonnell.digicert
+        SMTP_HOST: email-smtp.us-east-1.amazonaws.com
+        SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
         SMTP_SSL: TRUE
         TEST_ADDRESS: ${{ github.event.inputs.test_address }}
