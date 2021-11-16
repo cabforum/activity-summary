@@ -77,7 +77,7 @@ args = parser.parse_args()
 
 test_address = os.environ.get('TEST_ADDRESS')
 
-if test_address:
+if test_address and test_address.casefold() != 'NONE'.casefold():
     if not validators.email(test_address):
         raise ValueError(f'E-mail address "{test_address}" is not valid')
 else:

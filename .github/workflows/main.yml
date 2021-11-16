@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       test_address:
-        description: 'The address to receive digests'
+        description: 'The address to receive digests (enter "NONE" to send to the configured addresses)'
         required: true
 
 jobs:
