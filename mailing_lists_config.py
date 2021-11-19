@@ -36,11 +36,30 @@ _MAILING_LIST_SERVERCERT = MailingList(
     ]
 )
 
+_MAILING_LIST_INFRASTRUCTURE = MailingList(
+    'Infrastructure Subcommittee',
+    'infrastructure@cabforum.org',
+    [
+        GithubRepository(_USER_OFFICIAL, 'build-guidelines-action'),
+        GithubRepository(_USER_OFFICIAL, 'activity-summary'),
+    ]
+)
+
+_MAILING_LIST_FORUM = MailingList(
+    'CA/B Forum',
+    'public@cabforum.org',
+    [
+        GithubRepository(_USER_OFFICIAL, 'forum'),
+    ]
+)
+
 # TOP-LEVEL section
 MAILING_LISTS_CONFIGURATION = [
     _MAILING_LIST_CODE_SIGNING,
     _MAILING_LIST_SMIME,
     _MAILING_LIST_SERVERCERT,
+    _MAILING_LIST_INFRASTRUCTURE,
+    _MAILING_LIST_FORUM,
 ]
 
 ACTIVITY_BOT_CONFIGURATION = {
