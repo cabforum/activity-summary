@@ -30,7 +30,7 @@ jobs:
     - name: Run script
       env:
         GH_OAUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SMTP_HOST: email-smtp.us-east-1.amazonaws.com
+        SMTP_HOST: ${{ secrets.SMTP_HOSTNAME }}
         SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
         SMTP_SSL: TRUE
