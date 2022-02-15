@@ -27,7 +27,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r github-notify-ml/requirements.txt
         pip install -r requirements.txt
-    - name: run script
+    - name: Run script
       env:
         GH_OAUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SMTP_HOST: email-smtp.us-east-1.amazonaws.com
@@ -37,3 +37,5 @@ jobs:
         TEST_ADDRESS: ${{ github.event.inputs.test_address }}
       run: |
         python main.py send
+    - name: Scheduled workflow keep-alive
+      uses: gautamkrishnar/keepalive-workflow@1.0.7
