@@ -36,6 +36,16 @@ _MAILING_LIST_SERVERCERT = MailingList(
     ]
 )
 
+
+_MAILING_LIST_NETSEC = MailingList(
+    'Network Security Working Group',
+    'netsec@cabforum.org',
+    [
+        GithubRepository(_USER_OFFICIAL, 'netsec'),
+    ]
+)
+
+
 _MAILING_LIST_INFRASTRUCTURE = MailingList(
     'Infrastructure Subcommittee',
     'infrastructure@cabforum.org',
@@ -58,6 +68,7 @@ MAILING_LISTS_CONFIGURATION = [
     _MAILING_LIST_CODE_SIGNING,
     _MAILING_LIST_SMIME,
     _MAILING_LIST_SERVERCERT,
+    _MAILING_LIST_NETSEC,
     _MAILING_LIST_INFRASTRUCTURE,
     _MAILING_LIST_FORUM,
 ]
