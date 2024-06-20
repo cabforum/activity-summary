@@ -22,7 +22,7 @@ _MAILING_LIST_CODE_SIGNING = MailingList(
 
 _MAILING_LIST_SMIME = MailingList(
     'S/MIME Certificate Working Group',
-    'smcwg-public@cabforum.org',
+    'smcwg-public@groups.cabforum.org',
     [
         GithubRepository(_USER_OFFICIAL, 'smime'),
     ]
@@ -48,7 +48,7 @@ _MAILING_LIST_NETSEC = MailingList(
 
 _MAILING_LIST_INFRASTRUCTURE = MailingList(
     'Infrastructure Subcommittee',
-    'infrastructure@cabforum.org',
+    'infrastructure@groups.cabforum.org',
     [
         GithubRepository(_USER_OFFICIAL, 'build-guidelines-action'),
         GithubRepository(_USER_OFFICIAL, 'activity-summary'),
