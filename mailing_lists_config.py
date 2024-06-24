@@ -57,7 +57,7 @@ _MAILING_LIST_INFRASTRUCTURE = MailingList(
 
 _MAILING_LIST_FORUM = MailingList(
     'CA/B Forum',
-    'public@cabforum.org',
+    'public@groups.cabforum.org',
     [
         GithubRepository(_USER_OFFICIAL, 'forum'),
     ]
