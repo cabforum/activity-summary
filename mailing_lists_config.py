@@ -14,7 +14,7 @@ _USER_OFFICIAL = 'cabforum'
 # MAILING LISTS section
 _MAILING_LIST_CODE_SIGNING = MailingList(
     'Code Signing Certificate Working Group',
-    'cscwg-public@cabforum.org',
+    'cscwg-public@groups.cabforum.org',
     [
         GithubRepository(_USER_OFFICIAL, 'code-signing'),
     ]
@@ -39,7 +39,7 @@ _MAILING_LIST_SERVERCERT = MailingList(
 
 _MAILING_LIST_NETSEC = MailingList(
     'Network Security Working Group',
-    'netsec@cabforum.org',
+    'netsec@groups.cabforum.org',
     [
         GithubRepository(_USER_OFFICIAL, 'netsec'),
     ]
