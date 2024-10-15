@@ -30,7 +30,7 @@ _MAILING_LIST_SMIME = MailingList(
 
 _MAILING_LIST_SERVERCERT = MailingList(
     'Server Certificate Working Group',
-    'servercert-wg@cabforum.org',
+    'servercert-wg@groups.cabforum.org',
     [
         GithubRepository(_USER_OFFICIAL, 'servercert'),
     ]
