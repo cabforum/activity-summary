@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         ref: main
     - name: Set up Python
@@ -37,5 +37,3 @@ jobs:
         TEST_ADDRESS: ${{ github.event.inputs.test_address }}
       run: |
         python main.py send
-    - name: Scheduled workflow keep-alive
-      uses: gautamkrishnar/keepalive-workflow@1.0.7
